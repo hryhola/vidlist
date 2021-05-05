@@ -1,7 +1,7 @@
 
 import { combineReducers } from '@reduxjs/toolkit'
 
-import clicksReducer from './counter'
+import clicksReducer from '../features/counter/counter.slice'
 
 const clicks = { count: clicksReducer }
 
