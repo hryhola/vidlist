@@ -12,13 +12,13 @@ export const getVideoId = (link: string) => {
 export const getStartAndEndParams = (video: Video) => {
   let params = "";
 
-  if (video.start) {
+  if (video.start > 0) {
     params += `start=${video.start}`;
   }
 
-  if (video.duration) {
+  if (video.watchTime < video.info.duration) {
     params !== "" && (params += "&");
-    params += `end=${video.duration + (video.start ? video.start : 0)}`;
+    params += `end=${video.watchTime + (video.start ? video.start : 0)}`;
   }
 
   return params;
@@ -27,7 +27,7 @@ export const getStartAndEndParams = (video: Video) => {
 export const getEmbedLink = (video: Video) => {
   let link = `https://www.youtube.com/embed/${video.youtubeId}`;
 
-  if (video.start || video.duration) link += "?" + getStartAndEndParams(video);
+  if (video.start > 0 || video.watchTime < video.info.duration) link += "?" + getStartAndEndParams(video);
 
   return link;
 };

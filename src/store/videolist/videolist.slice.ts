@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Video } from "../../types";
+import { Video, VideoKey } from "../../types";
 
 export interface VideolistState {
   videos: Video[];
@@ -18,12 +18,20 @@ const videolistSlice = createSlice({
       state.videos.push(payload);
       state.videos.sort((a, b) => a.queue - b.queue);
     },
-    removeVideo(state, { payload }: PayloadAction<Pick<Video, "queue" | "youtubeId">>) {
+    removeVideo(state, { payload }: PayloadAction<VideoKey>) {
       state.videos = state.videos.filter((v) => !(v.queue === payload.queue && v.youtubeId === payload.youtubeId));
-      state.videos.sort((a, b) => a.queue - b.queue);
     },
+    increaseWatchTime(state, { payload }: PayloadAction<VideoKey & { increaseTime: number }>) {
+      if (payload.increaseTime < 0) throw new Error("Increase time can't be negative!")
+
+      const video = state.videos.find((v) => v.youtubeId === payload.youtubeId && v.queue === payload.queue)
+
+      if (!video) throw new Error("Video is not in the list!")
+
+      video.watchTime += payload.increaseTime;
+    }
   },
 });
 
-export const { addVideo, removeVideo } = videolistSlice.actions;
+export const { addVideo, removeVideo, increaseWatchTime } = videolistSlice.actions;
 export default videolistSlice.reducer;

@@ -1,4 +1,5 @@
 import { isYoutubeLink, getVideoId, getEmbedLink } from "./link";
+import { getVideoInfo } from "../../store/videolist/videolist.slice.test";
 
 describe("Parsing video links", () => {
   test("Detecting non-youtube links", () => {
@@ -105,10 +106,10 @@ describe("Parsing video links", () => {
   });
 
   test("Getting embed links", () => {
-    const defaultParams = { queue: 1, youtubeId: "9smIVyrAnS4" };
-    expect(getEmbedLink({ ...defaultParams })).toBe("https://www.youtube.com/embed/9smIVyrAnS4");
-    expect(getEmbedLink({ ...defaultParams, start: 54 })).toBe("https://www.youtube.com/embed/9smIVyrAnS4?start=54");
-    expect(getEmbedLink({ ...defaultParams, duration: 10, start: 11 })).toBe("https://www.youtube.com/embed/9smIVyrAnS4?start=11&end=21");
-    expect(getEmbedLink({ ...defaultParams, duration: 10 })).toBe("https://www.youtube.com/embed/9smIVyrAnS4?end=10");
+    const defaultParams = { queue: 1, youtubeId: "9smIVyrAnS4", info: getVideoInfo() };
+    expect(getEmbedLink({ ...defaultParams, watchTime: 999999, start: 0 })).toBe("https://www.youtube.com/embed/9smIVyrAnS4");
+    expect(getEmbedLink({ ...defaultParams, watchTime: 999999, start: 54 })).toBe("https://www.youtube.com/embed/9smIVyrAnS4?start=54");
+    expect(getEmbedLink({ ...defaultParams, watchTime: 10, start: 11 })).toBe("https://www.youtube.com/embed/9smIVyrAnS4?start=11&end=21");
+    expect(getEmbedLink({ ...defaultParams, watchTime: 10, start: 0 })).toBe("https://www.youtube.com/embed/9smIVyrAnS4?end=10");
   });
 });
