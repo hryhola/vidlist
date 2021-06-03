@@ -1,5 +1,5 @@
 import { isYoutubeLink, getVideoId, getEmbedLink } from "./link";
-import { getVideoInfo } from "../../store/videolist/videolist.slice.test";
+import { getVideoInfo } from "../../features/videolist/slice.test";
 
 describe("Parsing video links", () => {
   test("Detecting non-youtube links", () => {

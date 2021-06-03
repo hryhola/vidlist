@@ -31,3 +31,6 @@ export const getEmbedLink = (video: Video) => {
 
   return link;
 };
+
+export const getYTLink = (youtubeId: string) => `https://www.youtube.com/watch?v=${youtubeId}`;
+

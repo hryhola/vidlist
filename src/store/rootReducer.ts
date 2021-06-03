@@ -1,21 +1,22 @@
+import { combineReducers } from "@reduxjs/toolkit";
 
-import { combineReducers } from '@reduxjs/toolkit'
+import videolistReducer from "../features/videolist/slice";
+import settingsReducer from "./settings/settings.slice";
+import addVideoReducer from "../features/addVideoForm/slice";
 
-import clicksReducer from '../features/counter/counter.slice'
-
-const clicks = { count: clicksReducer }
+const store = { videolist: videolistReducer, settings: settingsReducer, addVideoForm: addVideoReducer };
 
 export let rootReducer = combineReducers({
-  ...clicks
-})
+  ...store,
+});
 
 export default function createReducer(injectedReducers = {}) {
   rootReducer = combineReducers({
-    ...clicks,
+    ...store,
     ...injectedReducers,
   });
 
   return rootReducer;
 }
 
-export type RootState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof rootReducer>;

@@ -1,3 +1,5 @@
 import Videoplayer from "./videoplayer";
+import Videolist from "./videolist";
+import AddVideoForm from "./addVideoForm";
 
-export { Videoplayer };
+export { Videoplayer, Videolist, AddVideoForm };
